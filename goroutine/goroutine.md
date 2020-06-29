@@ -4,4 +4,4 @@
  - 设置线程数: runtime.GOMAXPROCS(n int) 
    - n <= 0 查询线程数
    - n > 0 设置线程数
- - 查询协程数: runtime.NumGrouptine()
+ - 查询当前协程数: runtime.NumGrouptine()
