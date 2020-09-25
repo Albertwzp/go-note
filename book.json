@@ -1,0 +1,46 @@
+{
+    "title": "Go Learninng",
+    "description": "Study Go Programming",
+    "author": "wzp",
+    "language": "zh-hans",
+    "root": ".",
+    "structure": {
+        "readme": "README.md",
+        "summary": "SUMMARY.md"
+    },
+    "links": {
+        "sharing": {
+            "google": false,
+            "facebook": false,
+            "twitter": false,
+            "weibo": false,
+            "all": false
+        },
+        "sidebar": {}
+    },
+    "plugins": ["-search", "search-pro", "atoc", "page-treeview", "anchor-navigation-ex"],
+    "pluginsConfig": {
+        "atoc": {
+            "addClass": true,
+            "className": "atoc"
+        },
+        "page-treeview": {
+            "minHeaderCount": "2",
+            "minHeaderDeep": "2"
+        }
+    },
+    "pdf": {
+        "pageNumbers": false,
+        "fontSize": 12,
+        "pageSize": "a4",
+        "margin": {
+            "right": 62,
+            "left": 62,
+            "top": 32,
+            "bottom": 32
+        }
+    },
+    "variables": {
+        "goVersion": "1.13.0"
+    }
+}
