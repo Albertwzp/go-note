@@ -1,12 +1,13 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
-	"log"
-	"time"
 	"io"
+	"log"
+	"net/http"
 	"os"
+	"time"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,12 +18,18 @@ func main() {
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	router := gin.Default()
+	router.LoadHTMLGlob("tem/**/*")
+	router.Static("/assets", "./assets")
 
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/welcome")
+	})
 	router.Use(Logger())
+	
 	// 此规则能够匹配/user/john这种格式，但不能匹配/user/ 或 /user这种格式
 	router.GET("/user/:name", func(c *gin.Context) {
 		name := c.Param("name")
-		c.String(http.StatusOK, "Hello %s", name)
+		c.HTML(http.StatusOK, "user/index.html", gin.H{"title": "Welcom", "user": name})
 	})
 
 	// 但是，这个规则既能匹配/user/john/格式也能匹配/user/john/send这种格式
@@ -30,6 +37,7 @@ func main() {
 	router.GET("/user/:name/*action", func(c *gin.Context) {
 		name := c.Param("name")
 		action := c.Param("action")
+		action = strings.Trim(action, "/")
 		message := name + " is " + action
 		c.String(http.StatusOK, message)
 	})
@@ -102,13 +110,13 @@ func main() {
 }
 
 func loginEndpoint(c *gin.Context) {
-   name := c.DefaultQuery("name", "jack")
-   c.String(200, fmt.Sprintf("hello %s\n", name))
+	name := c.DefaultQuery("name", "jack")
+	c.String(200, fmt.Sprintf("hello %s\n", name))
 }
 
 func submitEndpoint(c *gin.Context) {
-   name := c.DefaultQuery("name", "lily")
-   c.String(200, fmt.Sprintf("hello %s\n", name))
+	name := c.DefaultQuery("name", "lily")
+	c.String(200, fmt.Sprintf("hello %s\n", name))
 }
 
 func Logger() gin.HandlerFunc {
